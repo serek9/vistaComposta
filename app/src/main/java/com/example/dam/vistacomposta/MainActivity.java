@@ -2,13 +2,15 @@ package com.example.dam.vistacomposta;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener {
+public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener, ColorView.OnColorChangedListener {
 
     private EditNumber editNumber1, editNumber2;
     private TextView resultText;
+    private ColorView colorView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBar
         resultText.setText("Valor");
         editNumber1.setOnSeekBarChangeListener(this);
         editNumber2.setOnSeekBarChangeListener(this);
+        colorView = (ColorView) findViewById(R.id.colorView);
+        colorView.setOnColorChangedListener(this);
     }
 
     @Override
@@ -33,4 +37,9 @@ public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBar
     }
     @Override public void onStartTrackingTouch(SeekBar seekBar) {}
     @Override public void onStopTrackingTouch(SeekBar seekBar) {}
+
+    @Override
+    public void colorChanged(View view, int color) {
+        resultText.setText("#" +String.format("%06X", color).substring(2, 8));
+    }
 }
